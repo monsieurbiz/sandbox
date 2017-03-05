@@ -1,0 +1,18 @@
+version: '2'
+services:
+  web:
+    image: nginx:latest
+    volumes:
+      - ./www:/usr/share/nginx/html
+    networks:
+      - fortress
+    labels:
+      - "traefik.backend=web"
+      - "traefik.frontend.rule=Host:${fortress_host}"
+      - "traefik.port=80"
+
+networks:
+  fortress:
+    external:
+      name: fortress_webgateway
+
