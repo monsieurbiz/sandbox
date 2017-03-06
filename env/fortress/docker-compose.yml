@@ -4,12 +4,27 @@ services:
     image: nginx:latest
     volumes:
       - ./www:/usr/share/nginx/html
+    links:
+      - db
     networks:
       - fortress
     labels:
       - "traefik.backend=web"
-      - "traefik.frontend.rule=Host:${fortress_host}"
+      - "traefik.frontend.rule=Host:${FORTRESS_HOST}"
       - "traefik.port=80"
+  db:
+    image: mariadb
+    environment:
+      - MYSQL_ROOT_PASSWORD=foo
+      - MYSQL_DATABASE=foo
+      - FORTRESS_HOST=${FORTRESS_HOST}
+    volumes:
+      - database:/var/lib/mysql:rw
+      - ./init:/docker-entrypoint-initdb.d
+    networks:
+      - fortress
+volumes:
+  database: {}
 
 networks:
   fortress:
