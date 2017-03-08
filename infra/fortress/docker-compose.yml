@@ -9,7 +9,7 @@ services:
     networks:
       - fortress
     labels:
-      - "traefik.backend=web"
+      # - "traefik.backend=web"
       - "traefik.frontend.rule=Host:${FORTRESS_HOST}"
       - "traefik.port=80"
   db:
@@ -23,6 +23,8 @@ services:
       - ./init:/docker-entrypoint-initdb.d
     networks:
       - fortress
+    labels:
+      - "traefik.frontend.rule=Host:db__${FORTRESS_HOST}"
 volumes:
   database: {}
 
