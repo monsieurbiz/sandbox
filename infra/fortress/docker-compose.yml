@@ -8,6 +8,7 @@ services:
       - db
     networks:
       - fortress
+      - default
     labels:
       # - "traefik.backend=web"
       - "traefik.frontend.rule=Host:${FORTRESS_HOST}"
@@ -22,9 +23,9 @@ services:
       - database:/var/lib/mysql:rw
       - ./init:/docker-entrypoint-initdb.d
     networks:
-      - fortress
+      - default
     labels:
-      - "traefik.frontend.rule=Host:db__${FORTRESS_HOST}"
+      - "traefik.enable=false"
 volumes:
   database: {}
 
