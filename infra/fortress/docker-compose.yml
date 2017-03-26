@@ -35,5 +35,5 @@ volumes:
 networks:
   fortress:
     external:
-      name: fortress
+      name: fortress_web
 
