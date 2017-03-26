@@ -1,5 +1,7 @@
 version: '2'
+
 services:
+
   web:
     image: nginx:latest
     volumes:
@@ -8,11 +10,12 @@ services:
       - db
     networks:
       - fortress
-      - default
     labels:
-      # - "traefik.backend=web"
+      - "traefik.backend=web"
       - "traefik.frontend.rule=Host:${FORTRESS_HOST}"
       - "traefik.port=80"
+      - "traefik.frontend.entryPoints=http"
+
   db:
     image: mariadb
     environment:
@@ -23,9 +26,10 @@ services:
       - database:/var/lib/mysql:rw
       - ./init:/docker-entrypoint-initdb.d
     networks:
-      - default
+      - fortress
     labels:
       - "traefik.enable=false"
+
 volumes:
   database: {}
 
