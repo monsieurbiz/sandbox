@@ -23,7 +23,6 @@ services:
       - FORTRESS_HOST=${FORTRESS_HOST}
     volumes:
       - database:/var/lib/mysql:rw
-      - ./init:/docker-entrypoint-initdb.d
     networks:
       - fortress
     labels:
